@@ -15,9 +15,7 @@ const teacherSchema = new mongoose.Schema(
             required: true
         }
     },
-    {
-        timestamps : true
-    }
+    { timestamps : true }
 );
 
 const Teacher = mongoose.model('Teacher', teacherSchema);

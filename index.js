@@ -4,7 +4,7 @@ require('dotenv').config();
 const PORT = process.env.PORT || 3000;
 const dbConnection = require('./config/db');
 const TeacherApiRoutes = require('./routes/teacherApiRoutes');
-
+const BulletinApiRoutes = require('./routes/bulletinApiRoutes');
 const router = express.Router();
 
 app.use(express.json())
@@ -16,6 +16,8 @@ router.get('/', (req,res) => {
 
 app.use(router)
 app.use('/api', TeacherApiRoutes)
+app.use('/api', BulletinApiRoutes)
+// app.use('/api', InstrumentApiRoutes)
 
 dbConnection();
 

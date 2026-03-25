@@ -1,4 +1,5 @@
 const Teacher = require('../models/Teacher');
+const uploadToCloudinary = require('../middlewares/uploadToCloudinary');
 
 const TeacherApiController = {
     showTeachers : async (req, res) => {
@@ -12,12 +13,19 @@ const TeacherApiController = {
     },
     createTeacher : async (req,res) => {
         try {
-            const { name, image, curriculum } = req.body
-            if ([ name, image, curriculum ].some(value => !value)) {
+            const { name, curriculum } = req.body;
+            if ([ name, curriculum ].some(value => !value)) {
                 return res.status(400).json({ error: "Faltan campos obligatorios" });
                 }
+            
+            if (!req.file) { return res.status(400).json({ error : "Falta adjuntar una imagen."})};
 
-            const newTeacher = await Teacher.create(req.body);
+            const result = await uploadToCloudinary(req.file.buffer, 'teachers');
+            const imageUrl = result.secure_url;
+
+            const newTeacher = await Teacher.create({
+                name , image : imageUrl , curriculum
+            });
             res.status(201).json(newTeacher)
             
         } catch (error) {
@@ -28,20 +36,26 @@ const TeacherApiController = {
     updateTeacher : async (req,res) => {
         try {
             const teacherId = req.params.teacherId;
-            const { name, image, curriculum } = req.body;
+            const { name, curriculum } = req.body;
+            let imageUrl = null;
+            if (req.file) { 
+                const result = await uploadToCloudinary(req.file.buffer, 'teachers');
+                imageUrl = result.secure_url;
+            };
+            
             const updatedTeacher = await Teacher.findByIdAndUpdate(teacherId, 
-                { name, image, curriculum },  
+                { name, ...(imageUrl && { image: imageUrl}), curriculum },  
                 { returnDocument: 'after' });
 
             if (!updatedTeacher) {
                 return res.status(404).json({ error: 'Profesor no encontrado.' })
             }
 
-            res.status(200).json({updatedTeacher})
+            res.status(200).json(updatedTeacher)
             
         } catch (error) {
             console.error(error)
-            res.status(500).json({ error: 'Error actualizando datos del profesor.' })
+            res.status(500).json({ mensaje: 'Error actualizando datos del profesor.' })
         }
     },
     deleteTeacher : async (req,res) => {

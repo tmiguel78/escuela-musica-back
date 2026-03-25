@@ -1,13 +1,14 @@
 const express = require('express');
-const router = express();
+const router = express.Router();
 const TeacherApiController = require('../controllers/teacherController');
+const upload = require('../middlewares/upload');
 
-router.get('/teachers', TeacherApiController.showTeachers);
+router.get('/teacher', TeacherApiController.showTeachers);
 
-router.post('/teachers', TeacherApiController.createTeacher);
+router.post('/teacher', upload.single('image'), TeacherApiController.createTeacher);
 
-router.put('/teachers/:teacherId', TeacherApiController.updateTeacher);
+router.put('/teacher/:teacherId', upload.single('image'), TeacherApiController.updateTeacher);
 
-router.delete('/teachers/:teacherId', TeacherApiController.deleteTeacher);
+router.delete('/teacher/:teacherId', TeacherApiController.deleteTeacher);
 
 module.exports = router;
