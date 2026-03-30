@@ -13,8 +13,8 @@ const TeacherApiController = {
     },
     createTeacher : async (req,res) => {
         try {
-            const { name, curriculum } = req.body;
-            if ([ name, curriculum ].some(value => !value)) {
+            const { name, instrument, curriculum } = req.body;
+            if ([ name, instrument, curriculum ].some(value => !value)) {
                 return res.status(400).json({ error: "Faltan campos obligatorios" });
                 }
             
@@ -24,7 +24,7 @@ const TeacherApiController = {
             const imageUrl = result.secure_url;
 
             const newTeacher = await Teacher.create({
-                name , image : imageUrl , curriculum
+                name , instrument , image : imageUrl , curriculum
             });
             res.status(201).json(newTeacher)
             
@@ -36,7 +36,7 @@ const TeacherApiController = {
     updateTeacher : async (req,res) => {
         try {
             const teacherId = req.params.teacherId;
-            const { name, curriculum } = req.body;
+            const { name, instrument, curriculum } = req.body;
             let imageUrl = null;
             if (req.file) { 
                 const result = await uploadToCloudinary(req.file.buffer, 'teachers');
@@ -44,7 +44,7 @@ const TeacherApiController = {
             };
             
             const updatedTeacher = await Teacher.findByIdAndUpdate(teacherId, 
-                { name, ...(imageUrl && { image: imageUrl}), curriculum },  
+                { name, instrument, ...(imageUrl && { image: imageUrl}), curriculum },  
                 { returnDocument: 'after' });
 
             if (!updatedTeacher) {
