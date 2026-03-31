@@ -6,12 +6,10 @@ const verifyToken = require('../middlewares/auth');
 
 router.get('/teacher', TeacherApiController.showTeachers);
 
-router.use(verifyToken);
+router.post('/teacher', verifyToken, upload.single('image'), TeacherApiController.createTeacher);
 
-router.post('/teacher', upload.single('image'), TeacherApiController.createTeacher);
+router.put('/teacher/:teacherId', verifyToken, upload.single('image'), TeacherApiController.updateTeacher);
 
-router.put('/teacher/:teacherId', upload.single('image'), TeacherApiController.updateTeacher);
-
-router.delete('/teacher/:teacherId', TeacherApiController.deleteTeacher);
+router.delete('/teacher/:teacherId', verifyToken, TeacherApiController.deleteTeacher);
 
 module.exports = router;

@@ -6,12 +6,10 @@ const verifyToken = require('../middlewares/auth');
 
 router.get('/instrument', InstrumentApiController.showInstruments);
 
-router.use(verifyToken);
+router.post('/instrument', verifyToken, upload.single('image'), InstrumentApiController.createInstrument);
 
-router.post('/instrument', upload.single('image'), InstrumentApiController.createInstrument);
+router.put('/instrument/:instrumentId', verifyToken, upload.single('image'),InstrumentApiController.updateInstrument);
 
-router.put('/instrument/:instrumentId', upload.single('image'),InstrumentApiController.updateInstrument);
-
-router.delete('/instrument/:instrumentId', InstrumentApiController.deleteInstrument);
+router.delete('/instrument/:instrumentId', verifyToken, InstrumentApiController.deleteInstrument);
 
 module.exports = router;

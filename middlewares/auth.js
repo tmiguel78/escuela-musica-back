@@ -9,6 +9,10 @@ const verifyToken = async (req, res, next) => {
     try {
         const decodedToken = await admin.auth().verifyIdToken(token);
         req.uid = decodedToken.uid;
+        if (decodedToken.email !== process.env.ADMIN_EMAIL) {
+            return res.status(403).json({ message: 'No autorizado' });
+        }
+
         next()
     } catch (error) {
         console.error("Token verification failed: ", error);
