@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 const bulletinSchema = new mongoose.Schema(
     {
+        uid: { 
+            type: String, 
+            required: true, 
+            unique: true },
         text: {
             type: String,
             required : true
