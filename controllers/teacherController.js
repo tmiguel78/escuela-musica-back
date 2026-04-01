@@ -24,7 +24,7 @@ const TeacherApiController = {
             const imageUrl = result.secure_url;
 
             const newTeacher = await Teacher.create({
-                name , instrument , image : imageUrl , curriculum
+                name , instrument , image : imageUrl , curriculum, uid: req.uid
             });
             res.status(201).json(newTeacher)
             

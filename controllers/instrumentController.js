@@ -25,7 +25,7 @@ const InstrumentApiController = {
             const imageUrl = result.secure_url;
 
             const newInstrument = await Instrument.create(
-                { name, image: imageUrl }
+                { name, image: imageUrl, uid: req.uid }
             )
             res.status(201).json(newInstrument);
             

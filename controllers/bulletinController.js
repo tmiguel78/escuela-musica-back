@@ -23,7 +23,10 @@ const BulletinApiController = {
                 imageUrl = result.secure_url;
             }
 
-            const newBulletin = await Bulletin.create({ text, image : imageUrl});
+            const newBulletin = await Bulletin.create({ 
+                    text, 
+                    image : imageUrl, 
+                    uid: req.uid});
             res.status(201).json(newBulletin)
             
         } catch (error) {
