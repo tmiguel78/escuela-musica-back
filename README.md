@@ -57,7 +57,7 @@ Solo el administrador puede:
 ## Estructura del proyecto
 
 ```bash
-backend/
+escuela-musica-back/
 │
 ├── config/
 │   ├── cloudinary.js
@@ -84,7 +84,10 @@ backend/
 │   └── instrumentApiRoutes.js
 │
 ├── .env
+├── .env.example               # Plantilla de variables de entorno
+├── .gitignore
 ├── index.js
+├── package-lock.json
 └── package.json
 ```
 
@@ -113,11 +116,8 @@ Crear un archivo `.env` en la raíz:
 ```env
 PORT=3000
 MONGO_URI=tu_uri_de_mongodb
-
 ADMIN_EMAIL=email_admin
-
 FIREBASE_SERVICE_ACCOUNT='{...json...}'
-
 CLOUDINARY_CLOUD_NAME=...
 CLOUDINARY_API_KEY=...
 CLOUDINARY_API_SECRET=...
@@ -236,6 +236,6 @@ https://escuela-de-musica-corcheas.netlify.app/
 
 ## Autor
 
-José Antonio Miguel Artigas
+José Antonio Miguel
 
 ---
