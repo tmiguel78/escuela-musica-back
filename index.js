@@ -20,6 +20,13 @@ app.use(cors());
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
+app.get('/', (req, res) => {
+  res.send(`<h2>Inicio de la API. Consultar rutas específicas:</h2>
+          <h3>/api/instrument</h3>
+          <h3>/api/teacher</h3>
+          <h3>/api/bulletin</h3>`)
+})
+
 app.use('/api', TeacherApiRoutes)
 app.use('/api', BulletinApiRoutes)
 app.use('/api', InstrumentApiRoutes)
