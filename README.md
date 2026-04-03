@@ -236,6 +236,6 @@ https://escuela-de-musica-corcheas.netlify.app/
 
 ## Autor
 
-José Antonio Miguel
+Toño Miguel
 
 ---
