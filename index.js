@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
           <h3>/api/bulletin</h3>`)
 });
 app.get('/api/weather', async (req, res) => {
-    const apiUrl = 'https://api.weatherapi.com/v1/forecast.json?key=f7719a92581b4893bf4110639250312&q=Madrid&days=1&aqi=no&alerts=no';
+    const apiUrl = process.env.WEATHER_API_KEY;
     const response = await fetch(apiUrl);
     const data = await response.json();
     res.json(data)
